@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#a73741</color>
+    <color name="colorPrimaryDark">#73001b</color>
+    <color name="colorAccent">#ff8f00</color>
+
+    <color name="amarillo">#ffff00</color>
+    <color name="rojo">#d43f3a</color>
+    <color name="azul_clarito">#81d4fa</color>
+    <color name="violeta">#7b1fa2</color>
+    <color name="anaranjito">#ffab00</color>
+
+    <color name="wrong">#EEffbcaf</color>
+    <color name="good">#bde5b6</color>
+    <color name="in_process">#fff59d</color>
+    <color name="trasparent">#00ffffff</color>
+    <color name="verde_menta_light">#f1f8e9</color>
+
+    <color name="gris_claro">#eceff1</color>
+    <color name="gris_fondo_recycler">#e0e0e0</color>
+    <color name="verde_claro">#c0f9c6</color>
+
+    <color name="txt_app">#000000</color>
+
+    <color name="grisesito">#33000000</color>
+    <color name="verdesito">#8864b044</color>
+    <color name="azul_link">#005df4</color>
+</resources>

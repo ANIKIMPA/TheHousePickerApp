@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imgViewEmployee"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher"/>
+
+    <LinearLayout
+        android:id="@+id/bubbleChat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:minHeight="34dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_chat_bubble_green"
+        app:layout_constraintEnd_toStartOf="@+id/imgViewCustomer"
+        app:layout_constraintStart_toEndOf="@+id/imgViewEmployee"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:id="@+id/txtViewMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NMartinez:"
+        android:textColor="@color/txt_app" />
+
+    <TextView
+        android:id="@+id/txtViewVerSustitutos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="@string/ver_sustitutos"
+        android:textColor="@color/azul_link"
+        android:visibility="gone"/>
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/imgViewCustomer"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_user_44dp"/>
+
+    <TextView
+        android:id="@+id/txtViewDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textSize="13sp"
+        android:text="May 11, 2020 / 12:15pm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bubbleChat" />
+</android.support.constraint.ConstraintLayout>

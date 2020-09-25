@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/app_bar_checker"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.CheckerActivity">
+
+    <View
+        android:id="@+id/viewTop"
+        style="@style/line_separator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/txtViewCliente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        style="@style/text_app"
+        app:layout_constraintTop_toBottomOf="@id/viewTop"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/txtViewHoraEntrega"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="4dp"
+        style="@style/text_app"
+        app:layout_constraintTop_toBottomOf="@id/viewTop"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:id="@+id/view15"
+        style="@style/line_separator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtViewCliente"/>
+
+    <TextView
+        android:id="@+id/txtViewBinMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/agregar_bin_message"
+        app:layout_constraintBottom_toTopOf="@+id/view6"
+        app:layout_constraintEnd_toStartOf="@+id/view14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view15"
+        android:layout_margin="8dp"
+       android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewBines"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:scrollbars="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/view6"
+        app:layout_constraintEnd_toStartOf="@+id/view14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view15"
+        tools:listitem="@layout/column_bin" />
+
+    <View
+        android:id="@+id/view14"
+        style="@style/line_separator_vertical"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/view6"
+        app:layout_constraintEnd_toStartOf="@+id/btnAddBin"
+        app:layout_constraintTop_toBottomOf="@+id/view15" />
+
+    <Button
+        android:id="@+id/btnAddBin"
+        android:layout_width="86dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_effect_transparent"
+        android:drawableBottom="@drawable/ic_add_black_60dp"
+        android:text="@string/add_bin"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view15" />
+
+    <View
+        android:id="@+id/view6"
+        style="@style/line_separator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnAddBin"/>
+
+    <TextView
+        android:id="@+id/txtViewBagMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/agregar_bolsa_message"
+        app:layout_constraintBottom_toTopOf="@+id/view9"
+        app:layout_constraintEnd_toStartOf="@+id/view7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view6"
+        android:gravity="center_horizontal"
+        android:layout_margin="8dp"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewBags"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:scrollbars="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/view9"
+        app:layout_constraintEnd_toStartOf="@+id/view7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view6"
+        tools:listitem="@layout/column_bag" />
+
+    <View
+        android:id="@+id/view7"
+        style="@style/line_separator_vertical"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/view9"
+        app:layout_constraintEnd_toStartOf="@+id/btnAddBag"
+        app:layout_constraintTop_toBottomOf="@+id/view6" />
+
+    <Button
+        android:id="@+id/btnAddBag"
+        android:layout_width="86dp"
+        android:layout_height="wrap_content"
+        android:drawableBottom="@drawable/ic_add_black_76dp"
+        android:text="@string/add_bag"
+        android:textColor="@color/colorAccent"
+        android:background="@drawable/ripple_effect_transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view6" />
+
+    <View
+        android:id="@+id/view9"
+        style="@style/line_separator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddBag" />
+
+    <TextView
+        android:id="@+id/edtCheckQty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:paddingStart="8dp"
+        android:text="@string/producto"
+        style="@style/text_app"
+        android:background="@color/gris_claro"
+        app:layout_constraintEnd_toStartOf="@+id/view13"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view9"
+        tools:ignore="RtlSymmetry" />
+
+    <View
+        android:id="@+id/view13"
+        style="@style/line_separator_vertical"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/refreshLayout"
+        app:layout_constraintEnd_toStartOf="@+id/textLocation"
+        app:layout_constraintTop_toBottomOf="@+id/view9" />
+
+    <TextView
+        android:id="@+id/textLocation"
+        android:layout_width="38dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:background="@color/gris_claro"
+        style="@style/text_app"
+        android:text="@string/vrf"
+        app:layout_constraintEnd_toStartOf="@+id/view12"
+        app:layout_constraintTop_toBottomOf="@+id/view9" />
+
+    <View
+        android:id="@+id/view12"
+        style="@style/line_separator_vertical"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/refreshLayout"
+        app:layout_constraintEnd_toStartOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@id/view9" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="38dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        style="@style/text_app"
+        android:background="@color/gris_claro"
+        android:text="@string/pick"
+        app:layout_constraintEnd_toStartOf="@id/view16"
+        app:layout_constraintTop_toBottomOf="@+id/view9" />
+
+    <View
+        android:id="@+id/view16"
+        style="@style/line_separator_vertical"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toStartOf="@id/txtViewOrderQtyTh"
+        app:layout_constraintBottom_toTopOf="@id/refreshLayout"
+        app:layout_constraintTop_toBottomOf="@id/view9"/>
+
+    <TextView
+        android:id="@+id/txtViewOrderQtyTh"
+        android:layout_width="38dp"
+        android:layout_height="wrap_content"
+        android:text="@string/ord"
+        android:gravity="center_horizontal"
+        android:layout_marginEnd="8dp"
+        style="@style/text_app"
+        android:background="@color/gris_claro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view9"/>
+
+    <ProgressBar
+        android:id="@+id/progress_products"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.58" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtCheckQty">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewProductos"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/row_product" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/txtViewPickingCompleted"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="4dp"
+            android:text="@string/picking_completed"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="24dp"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btnCompleteOrder"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/ripple_transparent_borde_negro_redondeado"
+            android:text="@string/verification_completed"
+            android:layout_weight="1"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="24dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/txtViewTotalVerificado"
+            style="@style/text_app"
+            android:layout_width="38dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="24dp"
+            android:gravity="center"
+            android:textSize="17sp"
+            android:text="@string/zero_qty" />
+
+        <TextView
+            android:id="@+id/txtViewDividerLeft"
+            style="@style/text_app"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/of"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/txtViewTotalPick"
+            style="@style/text_app"
+            android:layout_width="38dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/zero_qty"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/txtViewRight"
+            style="@style/text_app"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/of"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/txtViewTotalOrderQty"
+            style="@style/text_app"
+            android:layout_width="38dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginEnd="3dp"
+            android:text="@string/zero_qty"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

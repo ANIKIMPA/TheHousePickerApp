@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.design2net.the_house">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="com.symbol.emdk.permission.EMDK" />
+
+    <dist:module dist:instant="true" />
+
+    <application
+        android:name="com.design2net.the_house.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:targetApi="m">
+        <activity
+            android:name="com.design2net.the_house.activity.ChatActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity android:name="com.design2net.the_house.activity.SelectTaskActivity" />
+        <activity
+            android:name="com.design2net.the_house.activity.PickerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.design2net.the_house.activity.LoginActivity"
+            android:windowSoftInputMode="adjustUnspecified">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.design2net.the_house.activity.CheckerActivity"
+            android:parentActivityName="com.design2net.the_house.activity.OrdenesActivity"
+            android:screenOrientation="fullSensor"
+            android:windowSoftInputMode="adjustPan">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.design2net.the_house.activity.OrdenesActivity" />
+        </activity>
+        <activity
+            android:name="com.design2net.the_house.activity.OrdenesActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTop"
+            android:parentActivityName="com.design2net.the_house.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.design2net.the_house.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.design2net.the_house.activity.MainActivity"
+            android:parentActivityName="com.design2net.the_house.activity.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.design2net.the_house.activity.LoginActivity" />
+        </activity>
+
+        <uses-library
+            android:name="com.symbol.emdk"
+            android:required="false" />
+    </application>
+
+</manifest>

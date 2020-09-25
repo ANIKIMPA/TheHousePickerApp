@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.SustitutoDialogFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="450dp">
+
+        <ImageView
+            android:id="@+id/imgViewSustituirProducto"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/producto_a_sustituir"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/txtViewProductName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="GOYA HABICHUELAS ROSADAS EN AGUA Y SAL 15.5 OZ - 50C"
+            android:textColor="@color/txt_app"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgViewSustituirProducto"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtViewSustNotas"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:text="Notas: Si no hay Goya puede ser otra marca"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toTopOf="@+id/txtViewSustMensaje"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgViewSustituirProducto"
+            app:layout_constraintTop_toBottomOf="@+id/txtViewProductName" />
+
+        <TextView
+            android:id="@+id/txtViewSustMensaje"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Sust: Otra marca, igual o menor precio"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toTopOf="@+id/line1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgViewSustituirProducto" />
+
+        <View
+            style="@style/line_separator"
+            android:id="@+id/line1"
+            app:layout_constraintTop_toBottomOf="@id/imgViewSustituirProducto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewOpcionesDeReemplazo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/line1"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="2dp"
+            android:textColor="@android:color/white"
+            android:background="@color/violeta"
+            android:gravity="center"
+            android:text="Seleccione opciones de reemplazo"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <View
+            style="@style/line_separator"
+            android:id="@+id/line2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewOpcionesDeReemplazo"/>
+
+        <EditText
+            android:id="@+id/edtSearchSustituto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/rectangulo_shape"
+            android:hint="@string/producto"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="1"
+            app:layout_constraintBottom_toBottomOf="@+id/imgBtnSustitutoBarcode"
+            app:layout_constraintEnd_toStartOf="@+id/imgBtnSustitutoBarcode"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imgBtnSustitutoBarcode"
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/imgBtnSustitutoBarcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line2"
+            android:src="@drawable/ic_lines_black_40dp"
+            android:visibility="gone"/>
+
+        <View
+            style="@style/line_separator"
+            android:id="@+id/line3"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgBtnSustitutoBarcode"/>
+
+        <FrameLayout
+            android:id="@+id/frameLayoutSustituto"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line3"
+            app:layout_constraintBottom_toTopOf="@+id/edt_notas">
+
+            <ProgressBar
+                android:layout_gravity="center"
+                android:id="@+id/progress_bar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:visibility="gone"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewSustitutos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="2dp"
+                tools:listitem="@layout/row_sustituto" />
+
+            <TextView
+                android:id="@+id/txtViewNoSustitutoAdded"
+                android:layout_gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:padding="8dp"
+                android:textSize="18sp"
+                android:textColor="@android:color/holo_red_dark"
+                android:textStyle="bold"
+                android:text="@string/no_product_added"
+                android:visibility="gone"/>
+        </FrameLayout>
+
+        <EditText
+            android:id="@+id/edt_notas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/rectangulo_shape"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:lines="2"
+            android:text=""
+            app:layout_constraintBottom_toTopOf="@+id/btnCancelarSustituto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btnCancelarSustituto"
+            style="@style/fragment_btns"
+            android:layout_marginStart="12dp"
+            android:text="@string/cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnEnviarSustitutos"
+            app:layout_constraintHorizontal_bias="0.70"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btnEnviarSustitutos"
+            style="@style/fragment_btns"
+            android:text="@string/enviar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"/>
+
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="not_available_reasons">
+        <item>Out of Stock</item>
+        <item>Producto no en condición</item>
+        <item>Producto fuera de fecha</item>
+        <item>Ordenado por error</item>
+    </string-array>
+</resources>

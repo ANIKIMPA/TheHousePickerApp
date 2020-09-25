@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/ripple_rectangulo_transparent_borde_negro"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageButton
+        android:id="@+id/downButton"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:background="@drawable/ripple_effect_transparent"
+        android:src="@drawable/ic_arrow_drop_down_black_30dp"
+        android:contentDescription="@string/sub" />
+
+    <TextView
+        android:id="@+id/txtValue"
+        android:layout_width="40dp"
+        android:layout_height="34dp"
+        android:background="@drawable/ripple_rectangulo_transparent_borde_negro"
+        android:gravity="center"
+        android:text="@string/zero_qty"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <ImageButton
+        android:id="@+id/upButton"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:background="@drawable/ripple_effect_transparent"
+        android:src="@drawable/ic_arrow_drop_up_black_30dp"
+        android:contentDescription="@string/add" />
+</LinearLayout>

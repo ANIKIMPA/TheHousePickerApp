@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <TextView
+        android:id="@+id/th_product"
+        style="@style/text_app"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/gris_claro"
+        android:paddingStart="8dp"
+        android:text="@string/producto"
+        app:layout_constraintEnd_toStartOf="@+id/view13"
+        app:layout_constraintStart_toStartOf="@+id/recyclerViewProductsInBag"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlSymmetry" />
+
+    <View
+        android:id="@+id/view13"
+        style="@style/line_separator_vertical"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewProductsInBag"
+        app:layout_constraintEnd_toStartOf="@+id/textLocation"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textLocation"
+        style="@style/text_app"
+        android:layout_width="38dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/gris_claro"
+        android:gravity="center_horizontal"
+        android:text="@string/qty"
+        app:layout_constraintEnd_toStartOf="@+id/view12"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view12"
+        style="@style/line_separator_vertical"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewProductsInBag"
+        app:layout_constraintEnd_toStartOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        style="@style/text_app"
+        android:layout_width="38dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/gris_claro"
+        android:gravity="center_horizontal"
+        android:text="@string/del"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerViewProductsInBag"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_products_in_bag"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35"
+        android:visibility="gone"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewProductsInBag"
+        android:layout_width="0dp"
+        android:layout_height="350dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/txtViewMoveTo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/th_product"
+        tools:listitem="@layout/row_product" />
+
+    <ImageView
+        android:id="@+id/imgViewBin"
+        style="@style/txt_bin"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSaveBag"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtViewTotal" />
+
+    <TextView
+        android:id="@+id/txtViewMoveTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/txt_app"
+        android:text="@string/move_to"
+        android:textStyle="bold"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="@id/imgViewBin"
+        app:layout_constraintStart_toEndOf="@id/imgViewBin"/>
+
+    <Spinner
+        android:id="@+id/spinnerBin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSaveBag"
+        app:layout_constraintStart_toEndOf="@+id/imgViewBin"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewMoveTo" />
+
+    <TextView
+        android:id="@+id/txtViewTotal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="4dp"
+        style="@style/text_app"
+        android:text="@string/zero_qty"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSaveBag"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/btnSaveBag"
+        app:layout_constraintEnd_toStartOf="@+id/txtViewTotal"
+        app:layout_constraintTop_toTopOf="@+id/txtViewTotal"
+        android:visibility="gone"
+        android:importantForAutofill="no"
+        tools:targetApi="o"
+        tools:ignore="LabelFor" />
+
+    <Button
+        android:id="@+id/btnDeleteBag"
+        style="@style/fragment_btns"
+        android:text="@string/eliminar"
+        android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnCloseBag"
+        style="@style/fragment_btns"
+        android:text="@string/cancel"
+        android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnDeleteBag"
+        app:layout_constraintEnd_toStartOf="@id/btnSaveBag"/>
+
+    <Button
+        android:id="@+id/btnSaveBag"
+        style="@style/fragment_btns"
+        android:text="@string/guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

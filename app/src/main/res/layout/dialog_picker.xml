@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.PickerDialogFragment"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtViewSku"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/txt_app"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="8dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/viewTop"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/gris_claro"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtViewSku"/>
+
+            <TextView
+                android:id="@+id/txtViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:textStyle="bold"
+                android:textColor="@color/txt_app"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewTop" />
+
+            <LinearLayout
+                android:id="@+id/layoutAisle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/txtViewTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imgViewProduct">
+
+                <TextView
+                    android:id="@+id/txtViewAisle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/txt_app" />
+
+                <TextView
+                    android:id="@+id/txtViewNewAisle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textStyle="bold"
+                    android:textSize="42sp"
+                    android:text="0/19"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutNoDisponible"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/layoutAisle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imgViewProduct"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/no_disponible"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/txt_app" />
+
+                <TextView
+                    android:id="@+id/txtNoDisponibleReason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/txt_app" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgViewProduct"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:contentDescription="@string/image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtViewTitle" />
+
+            <android.support.constraint.Barrier
+                android:id="@+id/barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="imgViewProduct" />
+
+            <Button
+                android:id="@+id/btnRemoverPicked"
+                android:layout_width="120dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:textAllCaps="false"
+                android:text="@string/remover"
+                android:textColor="@android:color/white"
+                android:background="@drawable/ripple_back_red"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barrier"/>
+
+            <Button
+                android:id="@+id/btnScanWithQty"
+                android:layout_width="120dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:textAllCaps="false"
+                android:text="Scan with qty"
+                android:textColor="@android:color/white"
+                android:background="@drawable/ripple_back_purple"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barrier"/>
+
+            <TextView
+                android:id="@+id/txtViewNotas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/txt_app"
+                android:textStyle="bold"
+                android:labelFor="@+id/edtNotas"
+                android:text="@string/notas_administrativas"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnScanWithQty" />
+
+            <EditText
+                android:id="@+id/edtNotas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:lines="2"
+                android:imeOptions="actionDone"
+                android:background="@drawable/rectangulo_shape"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtViewNotas"
+                android:autofillHints="note"
+                tools:targetApi="o" />
+
+            <LinearLayout
+                android:id="@+id/layoutUpc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edtNotas">
+
+                <TextView
+                    android:id="@+id/upcTh"
+                    style="@style/text_app"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/upc"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtViewUpcProduct"
+                    style="@style/text_app"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp" />
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <ProgressBar
+            android:layout_gravity="center"
+            android:id="@+id/progress_bar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_th"/>
+    </FrameLayout>
+</ScrollView>

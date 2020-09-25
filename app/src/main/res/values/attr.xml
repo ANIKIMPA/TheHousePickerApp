@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="texts">
+        <attr name="top_text" format="string" />
+        <attr name="bottom_text" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="numericUpDown">
+        <attr name="value" format="integer" />
+        <attr name="textColor" format="color" />
+    </declare-styleable>
+</resources>

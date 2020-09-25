@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp">
+
+    <LinearLayout
+        android:id="@+id/constraintLayoutRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtViewDescription"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            style="@style/text_app"
+            android:layout_marginBottom="2dp" />
+
+        <EditText
+            android:id="@+id/edt_product_checkQty"
+            android:layout_width="38dp"
+            android:layout_height="wrap_content"
+            android:maxLength="3"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="number"
+            android:selectAllOnFocus="true"
+            android:autofillHints=""
+            tools:targetApi="o"
+            tools:ignore="LabelFor" />
+
+        <ImageButton
+            android:id="@+id/imgBtn_remove"
+            android:layout_width="38dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/ripple_effect_transparent"
+            android:padding="5dp"
+            android:src="@drawable/ic_delete_black_24dp"
+            android:contentDescription="@string/image" />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
