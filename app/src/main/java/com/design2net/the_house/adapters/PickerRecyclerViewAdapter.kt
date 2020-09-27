@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import com.design2net.the_house.R
 import com.design2net.the_house.models.Producto
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.dialog_product_details.view.*
 import kotlinx.android.synthetic.main.row_picker.view.*
 
 
@@ -40,7 +39,7 @@ class PickerRecyclerViewAdapter(private val mValues: ArrayList<Producto>, privat
             val item = mValues[position]
 
             mView.txtViewTitle.text = item.description
-            mView.txtViewPick.text = "UPC: ${item.upc.joinToString(", ")}"
+            mView.txtViewPick.text = "UPC: ${item.upcs.joinToString(", ")}"
             mView.txtViewQty.text = "Qty: ${item.orderQty}"
             mView.txtViewPick.text = "Pick: ${item.pickQty}"
             mView.txtViewPasillo.text = Html.fromHtml("<b>Aisle:</b> ${item.aisle}")

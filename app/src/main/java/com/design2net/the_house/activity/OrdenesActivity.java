@@ -499,15 +499,15 @@ public class OrdenesActivity extends
 
     @Override
     public void onOrdenClick(int position) {
-        if (!mOrdenes.get(position).user.isEmpty() && ! mOrdenes.get(position).user.equals(MyApplication.Companion.getAuth().getUsername())) {
-            Toast toast = Toast.makeText(getApplicationContext(), Html.fromHtml("El usuario <b>"+ mOrdenes.get(position).user + "</b> está trabajando esta orden"), Toast.LENGTH_SHORT);
-//            LinearLayout toastContentView = (LinearLayout) toast.getView();
-//            toastContentView.setPadding(converTodp(8), converTodp(8), converTodp(8), converTodp(8));
-//            TextView textView = ((TextView)((LinearLayout)toast.getView()).getChildAt(0));
-//            textView.setTextColor(Color.BLACK);
-            toast.show();
-            return;
-        }
+//        if (!mOrdenes.get(position).user.isEmpty() && ! mOrdenes.get(position).user.equals(MyApplication.Companion.getAuth().getUsername())) {
+//            Toast toast = Toast.makeText(getApplicationContext(), Html.fromHtml("El usuario <b>"+ mOrdenes.get(position).user + "</b> está trabajando esta orden"), Toast.LENGTH_SHORT);
+////            LinearLayout toastContentView = (LinearLayout) toast.getView();
+////            toastContentView.setPadding(converTodp(8), converTodp(8), converTodp(8), converTodp(8));
+////            TextView textView = ((TextView)((LinearLayout)toast.getView()).getChildAt(0));
+////            textView.setTextColor(Color.BLACK);
+//            toast.show();
+//            return;
+//        }
 
         String text = "Ver sustitutos";
         SpannableString ss = new SpannableString(text);

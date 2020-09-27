@@ -338,7 +338,7 @@ class CheckerActivity : BarcodeScannerActivity(), ProductosRecyclerViewAdapter.O
 
                 // Filtrar productos por descripcion o por upc.
                 mAllProducts.forEach {
-                    if (it.description.contains(p0.toString(), true) || it.upc.contains(p0.toString()))
+                    if (it.description.contains(p0.toString(), true) || it.upcs.contains(p0.toString()))
                         mProductos.add(it)
                 }
 
@@ -552,7 +552,7 @@ class CheckerActivity : BarcodeScannerActivity(), ProductosRecyclerViewAdapter.O
         val bundle = Bundle()
         bundle.putString("orderNumber", mOrderNumber)
         bundle.putString("sku", mProductos[position].sku)
-        bundle.putStringArray("upc", mProductos[position].upc.toTypedArray())
+        bundle.putStringArray("upc", mProductos[position].upcs.toTypedArray())
         bundle.putString("productImage", mProductos[position].imageUrl)
         bundle.putString("description", mProductos[position].description)
         bundle.putInt("ord", mProductos[position].orderQty)

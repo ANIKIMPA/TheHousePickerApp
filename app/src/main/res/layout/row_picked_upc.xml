@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayoutRow"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="50dp">
+
+    <TextView
+        android:id="@+id/txtViewPickedUpc"
+        style="@style/text_app"
+        android:layout_width="110dp"
+        android:layout_height="0dp"
+        android:gravity="start|center_vertical"
+        android:text="0008807616363"
+        app:layout_constraintBottom_toTopOf="@id/view23"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view25"
+        style="@style/line_separator_vertical"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/view23"
+        app:layout_constraintStart_toEndOf="@+id/txtViewPickedUpc"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/txtViewPickedQty"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/zero_qty"
+        app:layout_constraintBottom_toTopOf="@id/view23"
+        app:layout_constraintStart_toEndOf="@+id/view25"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view24"
+        style="@style/line_separator_vertical"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/view23"
+        app:layout_constraintStart_toEndOf="@+id/txtViewPickedQty"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtViewPickerUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="supermax(d2n)"
+        app:layout_constraintBottom_toTopOf="@id/view23"
+        app:layout_constraintEnd_toStartOf="@+id/view21"
+        app:layout_constraintStart_toEndOf="@+id/view24"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view21"
+        style="@style/line_separator_vertical"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/view23"
+        app:layout_constraintEnd_toStartOf="@+id/txtViewPickedFecha"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtViewPickedFecha"
+        android:layout_width="130dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="25-Sep-20 12:05PM"
+        app:layout_constraintBottom_toTopOf="@id/view23"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view23"
+        style="@style/line_separator"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

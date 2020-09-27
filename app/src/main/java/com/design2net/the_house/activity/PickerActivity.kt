@@ -234,13 +234,7 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
         pasillos.add("Todos los pasillos")
 
         if (mProductosStatus.isNotEmpty()) {
-            try {
-                pasillos.addAll(mProductosStatus.map { it.aisle }.distinct() as ArrayList<String>)
-            } catch (e: java.lang.ClassCastException) {
-                for (mProduct in mProductosStatus) {
-                    pasillos.add(mProduct.aisle)
-                }
-            }
+            pasillos.addAll(mProductosStatus.map { it.aisle }.distinct())
         }
 
         spinnerAdapter = ArrayAdapter(this@PickerActivity, android.R.layout.simple_spinner_dropdown_item, pasillos)
@@ -342,8 +336,6 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
                     val productoObj = jsonProductos.getJSONObject(i)
 
                     val sku = productoObj.getString("sku")
-                    val upcStr = productoObj.getString("upc")
-                    val upc = upcStr.split(",")
                     val description = productoObj.getString("description")
                     val aisle = productoObj.getString("aisle")
                     val pickQty = productoObj.getInt("picker_qty")
@@ -358,32 +350,38 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
                     val comments = productoObj.getString("comments")
                     val substitute = productoObj.getString("substitute")
                     val waitingSubstitute = productoObj.getInt("waiting_substitute")
+                    val mUpcs = productoObj.getJSONArray("upcs")
+                    val upcs = ArrayList<String>()
+                    for (idx in 0 until mUpcs.length()) {
+                        upcs.add(mUpcs.getString(idx))
+                    }
+                    val upcStr = upcs.joinToString(",")
 
-                    mProductosAll.add(Producto(sku, upcStr, upc, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
+                    mProductosAll.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
 
                     when {
                         inPendintes -> {
                             if (pickerUser.isEmpty()) {
-                                mProductosStatus.add(Producto(sku, upcStr, upc, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
-                                mProductos.add(Producto(sku, upcStr, upc, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
+                                mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
+                                mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                             }
                         }
                         inListo -> {
                             if (pickerUser.isNotEmpty() && notAvailable == 0) {
-                                mProductosStatus.add(Producto(sku, upcStr, upc, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
-                                mProductos.add(Producto(sku, upcStr, upc, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
+                                mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
+                                mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                             }
                         }
                         inEspera -> {
                             if (waitingSubstitute == 1) {
-                                mProductosStatus.add(Producto(sku, upcStr, upc, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
-                                mProductos.add(Producto(sku, upcStr, upc, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
+                                mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
+                                mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                             }
                         }
                         inNoDisponible -> {
                             if (pickerUser.isNotEmpty() && notAvailable == 1) {
-                                mProductosStatus.add(Producto(sku, upcStr, upc, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
-                                mProductos.add(Producto(sku, upcStr, upc, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
+                                mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
+                                mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                             }
                         }
                     }
@@ -554,7 +552,7 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
         val bundle = Bundle()
         bundle.putString("orderNumber", mOrderNumber)
         bundle.putString("sku", mProductos[position].sku)
-        bundle.putStringArray("upc", mProductos[position].upc.toTypedArray())
+        bundle.putStringArray("upcs", mProductos[position].upcs.toTypedArray())
         bundle.putString("productImage", mProductos[position].imageUrl)
         bundle.putString("description", mProductos[position].description)
         bundle.putString("adminComments", mProductos[position].adminComments)

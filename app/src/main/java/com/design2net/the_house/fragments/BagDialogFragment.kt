@@ -268,7 +268,7 @@ class BagDialogFragment : BaseDialogFragment(), BagDetailsAdapter.OnProductListe
         val bundle = Bundle()
         bundle.putString("orderNumber", mOrderNumber)
         bundle.putString("sku", mProductos[position].sku)
-        bundle.putStringArray("upc", mProductos[position].upc.toTypedArray())
+        bundle.putStringArray("upc", mProductos[position].upcs.toTypedArray())
         bundle.putString("productImage", mProductos[position].imageUrl)
         bundle.putString("description", mProductos[position].description)
         bundle.putInt("ord", mProductos[position].orderQty)

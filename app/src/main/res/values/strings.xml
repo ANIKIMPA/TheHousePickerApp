@@ -101,4 +101,5 @@
     <string name="enviar">Enviar</string>
     <string name="ver_sustitutos"><u>Ver sustitutos</u></string>
     <string name="remover">Remover</string>
+    <string name="cerrar">Cerrar</string>
 </resources>

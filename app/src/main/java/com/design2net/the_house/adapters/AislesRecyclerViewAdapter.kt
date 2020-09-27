@@ -8,17 +8,13 @@ import android.view.ViewGroup
 import com.design2net.the_house.R
 import kotlinx.android.synthetic.main.row_aisle.view.*
 
-class AislesRecyclerViewAdapter (private val mValues: ArrayList<String>, private val mListener: AislesRecyclerViewListener)
+class AislesRecyclerViewAdapter (private val mValues: ArrayList<String>)
 : RecyclerView.Adapter<AislesRecyclerViewAdapter.ViewHolder>() {
-
-    interface AislesRecyclerViewListener {
-        fun onAisleClick(position: Int)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.row_aisle, parent, false)
-        return ViewHolder(view, mListener)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
@@ -27,17 +23,12 @@ class AislesRecyclerViewAdapter (private val mValues: ArrayList<String>, private
 
     override fun getItemCount(): Int = mValues.size
 
-    inner class ViewHolder(private val mView: View, private val listener: AislesRecyclerViewListener ) : RecyclerView.ViewHolder(mView) {
+    inner class ViewHolder(private val mView: View) : RecyclerView.ViewHolder(mView) {
 
         @SuppressLint("SetTextI18n")
         fun setData(position: Int) {
             val item = mValues[position]
             mView.txtViewAisle.text = item
-
-            mView.setOnClickListener {
-                if (position != RecyclerView.NO_POSITION)
-                    mListener.onAisleClick(position)
-            }
         }
     }
 }

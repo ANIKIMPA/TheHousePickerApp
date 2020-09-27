@@ -226,7 +226,7 @@
                 android:layout_height="match_parent"
                 android:padding="0dp"
                 app:layoutManager="LinearLayoutManager"
-                tools:listitem="@layout/row_product_details"/>
+                tools:listitem="@layout/row_product_details" />
 
             <TextView
                 android:id="@+id/txtViewNoBagAdded"
@@ -274,7 +274,6 @@
             app:layout_constraintEnd_toStartOf="@id/guideline4"
             app:layout_constraintStart_toEndOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/view1" />
-
 
         <View
             android:id="@+id/view2"

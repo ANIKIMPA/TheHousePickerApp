@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Producto implements NumberPicker.OnValueChangeListener, Parcelable {
     private String sku;
     private String upcStr;
-    private List<String> upc;
+    private List<String> upcs;
     private String description;
     private String aisle;
     private int pickQty;
@@ -35,7 +35,7 @@ public class Producto implements NumberPicker.OnValueChangeListener, Parcelable 
     public Producto(String sku, String upcStr, List<String> upcs, String description, String imageUrl) {
         this.sku = sku;
         this.upcStr = upcStr;
-        this.upc = upcs;
+        this.upcs = upcs;
         this.description = description;
         this.imageUrl = imageUrl;
     }
@@ -45,18 +45,18 @@ public class Producto implements NumberPicker.OnValueChangeListener, Parcelable 
         this.pickQty = pickQty;
     }
 
-    public Producto(String sku, String upcStr, List<String> upc, String description, int pickQty, String imageUrl, int checkQty, int orderQty) {
+    public Producto(String sku, String upcStr, List<String> upcs, String description, int pickQty, String imageUrl, int checkQty, int orderQty) {
         this(description, pickQty);
         this.sku = sku;
         this.upcStr = upcStr;
-        this.upc = upc;
+        this.upcs = upcs;
         this.imageUrl = imageUrl;
         this.checkQty = checkQty;
         this.orderQty = orderQty;
     }
 
-    public Producto(String sku, String upcStr, List<String> upc, String description, String aisle, int pickQty, String imageUrl, int checkQty, int orderQty, String pickerUser, String adminComments, int notAvailable, String notAvailableReason, String newAisle, String comments, String substitute, int waitingSubstitute) {
-        this(sku, upcStr, upc, description, pickQty, imageUrl, checkQty, orderQty);
+    public Producto(String sku, String upcStr, List<String> upcs, String description, String aisle, int pickQty, String imageUrl, int checkQty, int orderQty, String pickerUser, String adminComments, int notAvailable, String notAvailableReason, String newAisle, String comments, String substitute, int waitingSubstitute) {
+        this(sku, upcStr, upcs, description, pickQty, imageUrl, checkQty, orderQty);
         this.aisle = aisle;
         this.pickerUser = pickerUser;
         this.adminComments = adminComments;
@@ -71,7 +71,7 @@ public class Producto implements NumberPicker.OnValueChangeListener, Parcelable 
     protected Producto(Parcel in) {
         sku = in.readString();
         upcStr = in.readString();
-        upc = in.createStringArrayList();
+        upcs = in.createStringArrayList();
         description = in.readString();
         aisle = in.readString();
         pickQty = in.readInt();
@@ -98,7 +98,7 @@ public class Producto implements NumberPicker.OnValueChangeListener, Parcelable 
 
     // Getters
     public String getSku() { return sku; }
-    public List<String> getUpc() { return upc; }
+    public List<String> getUpcs() { return upcs; }
     public String getDescription() { return description; }
     public int getPickQty() { return pickQty; }
     public String getImageUrl() { return imageUrl; }
@@ -237,7 +237,7 @@ public class Producto implements NumberPicker.OnValueChangeListener, Parcelable 
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(sku);
         parcel.writeString(upcStr);
-        parcel.writeStringList(upc);
+        parcel.writeStringList(upcs);
         parcel.writeString(description);
         parcel.writeString(aisle);
         parcel.writeInt(pickQty);
