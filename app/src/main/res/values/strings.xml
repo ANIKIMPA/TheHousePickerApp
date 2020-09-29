@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">The House</string>
+    <string name="app_name">Picker App</string>
     <string name="Seleccione_la_tienda">Seleccione la Tienda</string>
     <string name="buscar_orden">Buscar orden</string>
     <string name="no_resultado">No se encontró resultado</string>

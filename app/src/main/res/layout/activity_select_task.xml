@@ -63,12 +63,13 @@
         android:background="@drawable/animation_button_tienda"
         android:text="@string/checker"
         android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/viewabajo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnPicker"
         app:layout_constraintTop_toBottomOf="@+id/view18"
-        app:layout_constraintVertical_bias="0.3"/>
+        app:layout_constraintVertical_bias="0.3" />
 
     <View
         android:id="@+id/viewabajo"

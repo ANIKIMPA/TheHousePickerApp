@@ -87,7 +87,7 @@
             android:text="@string/of"
             android:textColor="@color/txt_app"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txtViewPickProduct"
+            app:layout_constraintEnd_toStartOf="@+id/txtViewPick"
             app:layout_constraintStart_toEndOf="@+id/txtViewQty"
             app:layout_constraintTop_toTopOf="parent" />
 

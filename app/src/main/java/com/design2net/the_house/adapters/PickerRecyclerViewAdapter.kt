@@ -39,7 +39,7 @@ class PickerRecyclerViewAdapter(private val mValues: ArrayList<Producto>, privat
             val item = mValues[position]
 
             mView.txtViewTitle.text = item.description
-            mView.txtViewPick.text = "UPC: ${item.upcs.joinToString(", ")}"
+            mView.txtViewUpcProduct.text = "UPC: ${item.upcs.joinToString(", ")}"
             mView.txtViewQty.text = "Qty: ${item.orderQty}"
             mView.txtViewPick.text = "Pick: ${item.pickQty}"
             mView.txtViewPasillo.text = Html.fromHtml("<b>Aisle:</b> ${item.aisle}")

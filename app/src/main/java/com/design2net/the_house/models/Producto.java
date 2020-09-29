@@ -27,6 +27,7 @@ public class Producto implements NumberPicker.OnValueChangeListener, Parcelable 
     private String comments;
     private String substitute;
     private int waitingSubstitute;
+    private String dateTimePicked;
 
     public Producto(String sku) {
         this.sku = sku;
@@ -125,11 +126,11 @@ public class Producto implements NumberPicker.OnValueChangeListener, Parcelable 
     public boolean isNotPicked() { return pickerUser.isEmpty(); }
 
     public boolean isPendiente() {
-        return this.pickerUser.isEmpty() && this.notAvailable == 0;
+        return this.pickQty < this.orderQty;
     }
 
     public boolean isListo() {
-        return this.isPicked() && this.notAvailable == 0;
+        return this.pickQty >= this.orderQty;
     }
 
     public boolean isEnEspera() {
@@ -200,6 +201,50 @@ public class Producto implements NumberPicker.OnValueChangeListener, Parcelable 
         this.newAisle = newAisle;
     }
 
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public void setUpcStr(String upcStr) {
+        this.upcStr = upcStr;
+    }
+
+    public void setUpcs(List<String> upcs) {
+        this.upcs = upcs;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setAisle(String aisle) {
+        this.aisle = aisle;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setOrderQty(int orderQty) {
+        this.orderQty = orderQty;
+    }
+
+    public String getNotAvailableReason() {
+        return notAvailableReason;
+    }
+
+    public void setNotAvailableReason(String notAvailableReason) {
+        this.notAvailableReason = notAvailableReason;
+    }
+
+    public void setSubstitute(String substitute) {
+        this.substitute = substitute;
+    }
+
+    public int getWaitingSubstitute() {
+        return waitingSubstitute;
+    }
+
     public String getComments() {
         return comments;
     }
@@ -214,6 +259,14 @@ public class Producto implements NumberPicker.OnValueChangeListener, Parcelable 
 
     public void setWaitingSubstitute(int waitingSubstitute) {
         this.waitingSubstitute = waitingSubstitute;
+    }
+
+    public String getDateTimePicked() {
+        return dateTimePicked;
+    }
+
+    public void setDateTimePicked(String dateTimePicked) {
+        this.dateTimePicked = dateTimePicked;
     }
 
     public static final Creator<Producto> CREATOR = new Creator<Producto>() {

@@ -28,5 +28,6 @@ enum class RequestCode (val code: Int){
     GET_CHAT(125),
     GET_SUSTITUTOS(130),
     SEND_MESSAGE(135),
-    GET_NOTIFICATIONS(140)
+    GET_NOTIFICATIONS(140),
+    PICK_PRODUCTS(145)
 }

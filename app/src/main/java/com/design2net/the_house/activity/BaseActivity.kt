@@ -5,13 +5,19 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Gravity
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import com.design2net.the_house.BuildConfig
 import com.design2net.the_house.R
 import com.design2net.the_house.network.ConnectivityReceiver
@@ -84,6 +90,11 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
         imm.hideSoftInputFromWindow(editText.windowToken, 0)
     }
 
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
     protected fun requestLogOut(request: OkHttpRequest) {
         val params = hashMapOf("token" to MyApplication.getAuth().token)
         request.makePostRequest(RequestCode.LOGOUT.code, "logout", params)
@@ -93,5 +104,16 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
         MyApplication.logOut()
         startActivity(Intent(activity, LoginActivity::class.java))
         activity.finish()
+    }
+
+    protected fun errorToast(context: Context, text: String, duration: Int): Toast {
+        val toast = Toast.makeText(context, text, duration)
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+        val toastContentView = toast.view as LinearLayout
+        toastContentView.setBackgroundResource(R.drawable.spinner_background)
+        toastContentView.setPadding(converTodp(10), converTodp(10), converTodp(10), converTodp(10))
+        val textView = ((toast.view as LinearLayout)).getChildAt(0) as TextView
+        textView.setTextColor(Color.RED)
+        return toast
     }
 }

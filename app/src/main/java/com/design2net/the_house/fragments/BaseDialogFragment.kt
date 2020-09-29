@@ -1,10 +1,17 @@
 package com.design2net.the_house.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.support.v4.app.DialogFragment
 import android.util.Log
+import android.view.Gravity
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
+import com.design2net.the_house.R
 
 abstract class BaseDialogFragment:  DialogFragment(){
 
@@ -14,8 +21,10 @@ abstract class BaseDialogFragment:  DialogFragment(){
     }
 
     protected fun hideKeyboard(editText: EditText) {
-        val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(editText.windowToken, 0)
+        if (activity != null) {
+            val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(editText.windowToken, 0)
+        }
     }
 
     protected fun showKeyBoard() {
@@ -25,5 +34,17 @@ abstract class BaseDialogFragment:  DialogFragment(){
 
     protected fun log(text: String) {
         Log.i("NOVAN", text)
+    }
+
+    @SuppressLint("ShowToast")
+    protected fun errorToast(context: Context, text: String, duration: Int): Toast {
+        val toast = Toast.makeText(context, text, duration)
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+        val toastContentView = toast.view as LinearLayout
+        toastContentView.setBackgroundResource(R.drawable.spinner_background)
+        toastContentView.setPadding(converTodp(10), converTodp(10), converTodp(10), converTodp(10))
+        val textView = ((toast.view as LinearLayout)).getChildAt(0) as TextView
+        textView.setTextColor(Color.RED)
+        return toast
     }
 }

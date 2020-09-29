@@ -38,6 +38,7 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
     private val mProductosStatus = ArrayList<Producto>()
     private var pasillos = ArrayList<String>()
     private val sustitutoDialogFragment = SustitutoDialogFragment()
+    private val pickerDialogFragment = PickerDialogFragment()
     private lateinit var spinnerAdapter: ArrayAdapter<String>
     private var mOrderNumber = ""
     private var mOrderId = 0
@@ -361,13 +362,13 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
 
                     when {
                         inPendintes -> {
-                            if (pickerUser.isEmpty()) {
+                            if (pickQty < orderQty) {
                                 mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                                 mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                             }
                         }
                         inListo -> {
-                            if (pickerUser.isNotEmpty() && notAvailable == 0) {
+                            if (pickQty >= orderQty) {
                                 mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                                 mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                             }
@@ -484,28 +485,23 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
 
     override fun onBarcodeScanned(data: String) {
         val converter = BarcodeConverter(data)
-
-        if(sustitutoDialogFragment.dialog != null && sustitutoDialogFragment.dialog.isShowing) {
-            sustitutoDialogFragment.requestSustituto(converter.barcode().toString())
-            return
-        }
-
-        log(converter.barcode())
-        for (position in 0 until mProductos.size)
-            if (mProductos[position].upcStr.contains(converter.barcode()) || mProductos[position].sku.contains(data, true)) {
-                showPickerDialog(position)
-                return
+        if(pickerDialogFragment.dialog != null && pickerDialogFragment.dialog.isShowing) {
+            if (converter.barcode() in pickerDialogFragment.mUpcs)
+                pickerDialogFragment.onBarcodeScanned(converter.barcode())
+            else {
+                pickerDialogFragment.dismiss()
+                onBarcodeScanned(data)
+            }
+        } else {
+            for (position in 0 until mProductos.size) {
+                if (converter.barcode() in mProductos[position].upcs) {
+                    showPickerDialog(position, converter.barcode())
+                    return
+                }
             }
 
-
-        val toast = Toast.makeText(this, "Producto no está en lista", Toast.LENGTH_LONG)
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
-        val toastContentView = toast.view as LinearLayout
-        toastContentView.setBackgroundResource(R.drawable.spinner_background)
-        toastContentView.setPadding(converTodp(10), converTodp(10), converTodp(10), converTodp(10))
-        val textView = ((toast.view as LinearLayout)).getChildAt(0) as TextView
-        textView.setTextColor(Color.RED)
-        toast.show()
+            errorToast(this,"Producto no está en lista", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun countProductsInStatus() {
@@ -539,13 +535,10 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
         showPickerDialog(position)
     }
 
-    private fun showPickerDialog(position: Int) {
+    private fun showPickerDialog(position: Int, barcode: String = "") {
         // Si la orden está completada no levanta alertDialog.
         if (mStatus >= 2.5) {
             Toast.makeText(this, "Esta orden ya está completada.", Toast.LENGTH_SHORT).show()
-            return
-        } else if (mProductos[position].pickerUser.isNotEmpty() && mProductos[position].pickerUser != MyApplication.getAuth().username) {
-            Toast.makeText(this, "Product picked by ${mProductos[position].pickerUser}", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -563,12 +556,11 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
         bundle.putInt("pick", mProductos[position].pickQty)
         bundle.putString("comments", mProductos[position].comments)
         bundle.putString("substitute", mProductos[position].substitute)
-        bundle.putInt("pick", mProductos[position].pickQty)
         bundle.putInt("position", position)
+        bundle.putString("scannedUpc", barcode)
 
-        val dialog = PickerDialogFragment()
-        dialog.arguments = bundle
-        dialog.show(supportFragmentManager, "PickerDialogFragment")
+        pickerDialogFragment.arguments = bundle
+        pickerDialogFragment.show(supportFragmentManager, "PickerDialogFragment")
     }
 
     private fun showSustitutoDialog(position: Int) {
@@ -584,47 +576,8 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
         showSustitutoDialog(position)
     }
 
-    override fun onProductPicked(position: Int, pickedQty: Int, comment: String, notAvailable: Int, newAisle: String) {
-        runOnUiThread {
-            // Asiganar comentario al producto dentro de la lista.
-            for (idx in 0 until mProductosAll.size) {
-                if (mProductosAll[idx] == mProductos[position]) {
-                    mProductosAll[idx].pickQty = pickedQty
-                    mProductosAll[idx].adminComments = comment
-                    mProductosAll[idx].pickerUser = MyApplication.getAuth().username
-                    mProductosAll[idx].notAvailable = notAvailable
-                    mProductosAll[idx].newAisle = newAisle
-                    break
-                }
-            }
-
-            pasilloPos = pasillos.indexOf(mProductos[position].aisle)
-
-            if ((inListo && notAvailable == 0) || (inNoDisponible && notAvailable == 1)) {
-                mProductos[position].pickQty = pickedQty
-                mProductos[position].adminComments = comment
-                mProductos[position].pickerUser = MyApplication.getAuth().username
-                mProductos[position].notAvailable = notAvailable
-                mProductos[position].newAisle = newAisle
-                recyclerViewPick.adapter!!.notifyItemChanged(position)
-            } else {
-                mProductosStatus.remove(mProductos[position])
-                mProductos.removeAt(position)
-                recyclerViewPick.adapter!!.notifyItemRemoved(position)
-            }
-
-            when {
-                mProductosStatus.isEmpty() -> updateData()
-                mProductos.isEmpty() -> {
-                    pasillos.removeAt(pasilloPos)
-                    spinnerAdapter.notifyDataSetChanged()
-                    filtrarPorPasillo(pasilloPos)
-                }
-                else -> recyclerViewPick.adapter!!.notifyItemRangeChanged(position, mProductos.size)
-            }
-            updateData()
-            countProductsInStatus()
-        }
+    override fun onPickerDialogFragmentClose() {
+        requestProductos()
     }
 
     override fun onProductReseted(response: JSONObject) {

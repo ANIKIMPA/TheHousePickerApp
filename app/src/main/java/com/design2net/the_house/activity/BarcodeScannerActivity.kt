@@ -1,6 +1,11 @@
 package com.design2net.the_house.activity
 
+import android.graphics.Color
+import android.view.Gravity
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
+import com.design2net.the_house.R
 import com.design2net.the_house.interfaces.BarcodeListener
 import com.symbol.emdk.EMDKManager
 import com.symbol.emdk.EMDKManager.EMDKListener

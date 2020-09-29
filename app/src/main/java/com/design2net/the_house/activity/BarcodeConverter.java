@@ -1,7 +1,7 @@
 package com.design2net.the_house.activity;
 
 public class BarcodeConverter {
-    private final int SHORT_UPC_LENGTH = 8;
+    private final int UPC_LENGTH = 13;
     private String barcode;
 
     public BarcodeConverter(String barcode) {
@@ -10,15 +10,16 @@ public class BarcodeConverter {
 
     public String barcode() {
         String result = barcode;
+        result = removeCheckDigit(result);
 
         if(isShort())
-            result = convertToShortUPC(result);
+            result = convertToLongUPC(result);
 
-        return removeCheckDigit(result);
+        return result;
     }
 
     public boolean isShort() {
-        return barcode.length() == SHORT_UPC_LENGTH;
+        return barcode.length() < UPC_LENGTH;
     }
 
     private String convertToShortUPC(String upc) {
@@ -39,6 +40,19 @@ public class BarcodeConverter {
         }
 
         return upc;
+    }
+
+    private String convertToLongUPC(String upc) {
+        if (upc.length() >= UPC_LENGTH) {
+            return upc;
+        }
+        StringBuilder sb = new StringBuilder();
+        while (sb.length() < UPC_LENGTH - upc.length()) {
+            sb.append('0');
+        }
+        sb.append(upc);
+
+        return sb.toString();
     }
 
     private String removeCheckDigit(String barcode) {

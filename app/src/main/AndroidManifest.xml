@@ -24,15 +24,20 @@
         tools:targetApi="m">
         <activity
             android:name="com.design2net.the_house.activity.ChatActivity"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name="com.design2net.the_house.activity.SelectTaskActivity" />
+        <activity
+            android:name="com.design2net.the_house.activity.SelectTaskActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.design2net.the_house.activity.PickerActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.design2net.the_house.activity.LoginActivity"
-            android:windowSoftInputMode="adjustUnspecified">
+            android:windowSoftInputMode="adjustUnspecified"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,7 +47,7 @@
         <activity
             android:name="com.design2net.the_house.activity.CheckerActivity"
             android:parentActivityName="com.design2net.the_house.activity.OrdenesActivity"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -54,14 +59,16 @@
             android:launchMode="singleTop"
             android:parentActivityName="com.design2net.the_house.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.design2net.the_house.activity.MainActivity" />
         </activity>
         <activity
             android:name="com.design2net.the_house.activity.MainActivity"
-            android:parentActivityName="com.design2net.the_house.activity.LoginActivity">
+            android:parentActivityName="com.design2net.the_house.activity.LoginActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.design2net.the_house.activity.LoginActivity" />
