@@ -80,9 +80,10 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
         intent.getStringExtra("hora_desde") + " - " + intent.getStringExtra("hora_hasta")
         mStatus = intent.getDoubleExtra("status", 2.0)
 
-        chatNotificationIcon.visibility = View.VISIBLE
         initTabs()
         initRecyclerView()
+        recyclerViewPick.visibility = View.INVISIBLE
+        progressPicker.visibility = View.VISIBLE
         requestProductos()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -216,9 +217,6 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
     }
 
     private fun requestProductos() {
-        recyclerViewPick.visibility = View.INVISIBLE
-        progressPicker.visibility = View.VISIBLE
-
         val params = hashMapOf("order_number" to mOrderNumber)
         client!!.makePostRequest(RequestCode.GET_PRODUCTS.code, "get-productos", params)
     }
@@ -362,13 +360,13 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
 
                     when {
                         inPendintes -> {
-                            if (pickQty < orderQty) {
+                            if (pickerUser.isEmpty()) {
                                 mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                                 mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                             }
                         }
                         inListo -> {
-                            if (pickQty >= orderQty) {
+                            if (pickerUser.isNotEmpty() && notAvailable == 0) {
                                 mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                                 mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                             }

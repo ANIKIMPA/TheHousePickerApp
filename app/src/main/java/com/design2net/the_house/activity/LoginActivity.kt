@@ -2,13 +2,15 @@ package com.design2net.the_house.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
-import com.design2net.the_house.R
-import com.design2net.the_house.interfaces.ApiResponseListener
+import com.design2net.the_house.BuildConfig
 import com.design2net.the_house.MyApplication
+import com.design2net.the_house.R
+import com.design2net.the_house.UpdateApp
+import com.design2net.the_house.interfaces.ApiResponseListener
 import com.design2net.the_house.network.OkHttpRequest
 import com.design2net.the_house.network.RequestCode
 import kotlinx.android.synthetic.main.activity_login.*
@@ -26,8 +28,11 @@ class LoginActivity : AppCompatActivity(), ApiResponseListener {
 
         btnLogin.setOnClickListener { authenticateUser() }
 
-        if (MyApplication.isUserLoggedIn())
-            goToMainActivity()
+        checkForUpdateApk()
+    }
+
+    private fun checkForUpdateApk() {
+        client.makeGetRequest(RequestCode.CHECK_APP.code, "check-update.html")
     }
 
     private fun authenticateUser() {
@@ -48,6 +53,22 @@ class LoginActivity : AppCompatActivity(), ApiResponseListener {
     override fun onApiResponse(requestCode: Int, response: JSONObject, item: Any?) {
         when (requestCode) {
             RequestCode.LOGIN.code -> processLoginResponse(response)
+            RequestCode.CHECK_APP.code -> processUpdateApp(response)
+        }
+    }
+
+    private fun processUpdateApp(response: JSONObject) {
+        runOnUiThread {
+            val contenidoObj = response.getJSONObject("content")
+            val serverVersion = contenidoObj.getInt("version_code")
+            val versionName = contenidoObj.getString("version_name")
+            if (serverVersion > BuildConfig.VERSION_CODE) {
+                UpdateApp(this).execute()
+                return@runOnUiThread
+            }
+
+            if (MyApplication.isUserLoggedIn())
+                goToMainActivity()
         }
     }
 

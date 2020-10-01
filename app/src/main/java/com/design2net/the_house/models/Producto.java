@@ -126,11 +126,11 @@ public class Producto implements NumberPicker.OnValueChangeListener, Parcelable 
     public boolean isNotPicked() { return pickerUser.isEmpty(); }
 
     public boolean isPendiente() {
-        return this.pickQty < this.orderQty;
+        return this.pickerUser.isEmpty() && this.notAvailable == 0;
     }
 
     public boolean isListo() {
-        return this.pickQty >= this.orderQty;
+        return this.isPicked() && this.notAvailable == 0;
     }
 
     public boolean isEnEspera() {

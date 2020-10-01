@@ -78,7 +78,7 @@
                     android:layout_marginTop="4dp"
                     android:textStyle="bold"
                     android:textSize="42sp"
-                    android:text="0/19"
+                    android:text="@string/zero_of_zero"
                     android:layout_marginStart="8dp"/>
             </LinearLayout>
 
@@ -113,6 +113,20 @@
                     android:textColor="@color/txt_app" />
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btnNoDisponible"
+                android:layout_width="120dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="8dp"
+                android:textAllCaps="false"
+                android:text="@string/no_disponible"
+                android:textColor="@android:color/white"
+                android:background="@drawable/ripple_back_primary"
+                app:layout_constraintStart_toEndOf="@id/imgViewProduct"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutNoDisponible"/>
 
             <ImageView
                 android:id="@+id/imgViewProduct"
@@ -153,7 +167,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:textAllCaps="false"
-                android:text="Scan with qty"
+                android:text="@string/scan_with_qty"
                 android:textColor="@android:color/white"
                 android:background="@drawable/ripple_back_purple"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -170,7 +184,8 @@
                 android:labelFor="@+id/edtNotas"
                 android:text="@string/notas_administrativas"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnScanWithQty" />
+                app:layout_constraintTop_toBottomOf="@+id/btnScanWithQty"
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/edtNotas"
@@ -189,7 +204,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtViewNotas"
                 android:autofillHints="note"
-                tools:targetApi="o" />
+                tools:targetApi="o"
+                android:visibility="gone"/>
 
             <View
                 android:id="@+id/view26"

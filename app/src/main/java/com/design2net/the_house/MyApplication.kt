@@ -8,6 +8,7 @@ import com.design2net.the_house.models.Auth
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MyApplication : Application() {
 
     companion object {
@@ -15,12 +16,12 @@ class MyApplication : Application() {
         lateinit var okHttpClient: OkHttpClient
 
         const val PICKER_LEVEL = "5"
-        const val CHECKER_LEVEL = "62"
+        const val CHECKER_LEVEL = "999"
 
         fun getAuth(): Auth {
-            val username = session.getString("username", null)
-            val name = session.getString("name", null)
-            val token = session.getString("token", null)
+            val username = session.getString("username", "")
+            val name = session.getString("name", "")
+            val token = session.getString("token", "")
             val position = session.getString("position", "")
             val levels = session.getString("levels", "")
             val locations = session.getString("locations", "CAG1,CAP1,DOR1,GUY1,PON1,TRJ1")

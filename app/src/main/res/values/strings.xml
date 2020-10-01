@@ -23,6 +23,7 @@
     <string name="eliminar">Eliminar</string>
     <string name="url_checker">https://www.thehousetoyou.com/api-picker/api-checker/</string>
     <string name="url_picker">https://www.thehousetoyou.com/api-picker/</string>
+    <string name="api_update_apk">https://www.thehousetoyou.com/api-picker/picker.apk</string>
     <string name="confirmar">Confirmar</string>
     <string name="vrf">Vrf</string>
     <string name="of">/</string>
@@ -75,6 +76,7 @@
     <string name="agregar_bolsa_message">Para continuar favor agregar una bolsa de</string>
     <string name="upc">UPC:</string>
     <string name="completado">Completado</string>
+    <string name="completar">Completar</string>
     <string name="no_disponible">No disponible</string>
     <string name="notas_administrativas">Notas administrativas</string>
     <string name="ordenado">Ordenado</string>
@@ -102,4 +104,8 @@
     <string name="ver_sustitutos"><u>Ver sustitutos</u></string>
     <string name="remover">Remover</string>
     <string name="cerrar">Cerrar</string>
+    <string name="downloading_apk_message">Descargando Actualización</string>
+    <string name="item_image">Item Image</string>
+    <string name="zero_of_zero">0/0</string>
+    <string name="scan_with_qty">Scan with qty</string>
 </resources>

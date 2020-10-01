@@ -41,7 +41,7 @@ class PickerDialogFragment : BaseDialogFragment(), ApiResponseListener {
     private lateinit var mOrderNumber: String
     private lateinit var mSku: String
     internal lateinit var mUpcs: Array<String>
-    private var pickedItems = ArrayList<Producto>()
+    private lateinit var pickedItems: ArrayList<Producto>
     private var mAisles = ArrayList<String>()
     private var mAislesAll = ArrayList<String>()
     private lateinit var mDescription: String
@@ -53,7 +53,6 @@ class PickerDialogFragment : BaseDialogFragment(), ApiResponseListener {
     private var mSubstitute: String = ""
     private lateinit var mImageUrl: String
     private var mOrderQty = 0
-    private var mPickQty = 0
     private var mAislePos = 0
     private var mPosition: Int = 0
     private lateinit var mDialogView: View
@@ -81,28 +80,12 @@ class PickerDialogFragment : BaseDialogFragment(), ApiResponseListener {
 
     @SuppressLint("InflateParams", "SetTextI18n")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        mOrderNumber = arguments!!.getString("orderNumber")
-        mSku = arguments!!.getString("sku")
-        mUpcs = arguments!!.getStringArray("upcs")
-        mImageUrl = arguments!!.getString("productImage")
-        mDescription = arguments!!.getString("description")
-        mAdminComments = arguments!!.getString("adminComments")
-        mAisle = arguments!!.getString("aisle")
-        newUpdatedAisle = arguments!!.getString("new_aisle")
-        mPickerUser = arguments!!.getString("picker_user")
-        mPickQty = arguments!!.getInt("pick")
-        mOrderQty = arguments!!.getInt("ord")
-        mPosition = arguments!!.getInt("position")
-        mComments = arguments!!.getString("comments")
-        mSubstitute = arguments!!.getString("substitute")
-        scannedUpc = arguments!!.getString("scannedUpc")
-
+        initializeValues()
         val inflater = requireActivity().layoutInflater
         mDialogView = inflater.inflate(R.layout.dialog_picked, null)
 
         client = OkHttpRequest(getString(R.string.url_picker), this)
         client.makePostRequest(RequestCode.GET_AISLES.code, "get-aisles", hashMapOf("location" to mOrderNumber.take(4)))
-
         return activity?.let {
             val builder = AlertDialog.Builder(it)
 
@@ -118,11 +101,10 @@ class PickerDialogFragment : BaseDialogFragment(), ApiResponseListener {
                     .load(mImageUrl)
                     .into(mDialogView.imgViewProduct)
 
-            scanWithQtyDialog = scanWithQtyDialog()
-
             with(mDialogView) {
                 imgViewProduct.setOnClickListener { zoomImage() }
                 btnRemoverPicked.setOnClickListener { showRemoverDialog() }
+                btnNoDisponible.setOnClickListener { showNoDisponibleDialog(0) }
                 btnScanWithQty.setOnClickListener {
                     scanWithQtyDialog!!.show()
                     showKeyBoard()
@@ -130,6 +112,9 @@ class PickerDialogFragment : BaseDialogFragment(), ApiResponseListener {
             }
 
             builder.setView(mDialogView)
+                    .setPositiveButton(R.string.completar) {_, _ ->
+                        requestCompletedProduct()
+                    }
                     .setNegativeButton(R.string.cerrar) { dialog, _ ->
                         dialog.cancel()
                         mListener!!.onPickerDialogFragmentClose()
@@ -139,6 +124,29 @@ class PickerDialogFragment : BaseDialogFragment(), ApiResponseListener {
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
 
+    }
+
+    private fun initializeValues() {
+        mAislePos = 0
+        typedText = ""
+        dialogOpen = ""
+        mTotalQty = arguments!!.getInt("pick")
+        scanWithQtyDialog = scanWithQtyDialog()
+        mOrderNumber = arguments!!.getString("orderNumber")
+        mSku = arguments!!.getString("sku")
+        mUpcs = arguments!!.getStringArray("upcs")
+        mImageUrl = arguments!!.getString("productImage")
+        mDescription = arguments!!.getString("description")
+        mAdminComments = arguments!!.getString("adminComments")
+        mAisle = arguments!!.getString("aisle")
+        newUpdatedAisle = arguments!!.getString("new_aisle")
+        mPickerUser = arguments!!.getString("picker_user")
+        mOrderQty = arguments!!.getInt("ord")
+        mPosition = arguments!!.getInt("position")
+        mComments = arguments!!.getString("comments")
+        mSubstitute = arguments!!.getString("substitute")
+        scannedUpc = arguments!!.getString("scannedUpc")
+        pickedItems = ArrayList()
     }
 
     @SuppressLint("SetTextI18n")
@@ -165,20 +173,30 @@ class PickerDialogFragment : BaseDialogFragment(), ApiResponseListener {
                         qtyToScan.isEmpty() -> errorToast(requireContext(),"Debes especificar cantidad válida!", Toast.LENGTH_SHORT).show()
                         qtyToScan.toInt() == 0 -> errorToast(requireContext(),"Entre una cantidad diferente de 0", Toast.LENGTH_SHORT).show()
                         qtyToScan.toInt() < mTotalQty * -1 -> errorToast(requireContext(),"Entre una cantidad mayor o igual a ${mTotalQty * -1}", Toast.LENGTH_SHORT).show()
+                        qtyToScan.toInt() + mTotalQty > mOrderQty -> errorToast(requireContext(),"No se pueden añadir más productos de la cantidad máxima ordenada. Para añadir más productos debe cambiar la cantidad ordenada en el Store-Admin", Toast.LENGTH_LONG).show()
                         else -> requestUpdateProduct(barcode, qtyToScan.toInt())
                     }
                 }
                 else {
-                    requestUpdateProduct(barcode, 1)
+                    if (mTotalQty < mOrderQty)
+                        requestUpdateProduct(barcode, 1)
+                    else {
+                        errorToast(requireContext(),"No se pueden añadir más productos de la cantidad máxima ordenada. Para añadir más productos debe cambiar la cantidad ordenada en el Store-Admin", Toast.LENGTH_LONG).show()
+                        requestPickedUpcs()
+                    }
                 }
 
-                hideKeyboard(scanWithQtyDialog!!.edtQtyToScan)
-                scanWithQtyDialog!!.dismiss()
+                scanWithQtyDialog?.edtQtyToScan?.let { hideKeyboard(it) }
+                scanWithQtyDialog?.dismiss()
             }
         } else {
-            val params = hashMapOf("order_number" to mOrderNumber, "sku" to mSku)
-            client.makePostRequest(RequestCode.PICK_PRODUCTS.code, "get-picked-upcs", params)
+            requestPickedUpcs()
         }
+    }
+
+    private fun requestPickedUpcs() {
+        val params = hashMapOf("order_number" to mOrderNumber, "sku" to mSku)
+        client.makePostRequest(RequestCode.PICK_PRODUCTS.code, "get-picked-upcs", params)
     }
 
     private fun requestUpdateProduct(barcode: String, pickedQty: Int) {
@@ -187,7 +205,29 @@ class PickerDialogFragment : BaseDialogFragment(), ApiResponseListener {
         val params = hashMapOf("order_number" to mOrderNumber, "sku" to mSku, "not_available_reason" to "", "pick_qty" to pickedQty.toString(),
                 "comments" to mAdminComments, "original_aisle" to mAisle, "new_aisle" to newUpdatedAisle, "upc" to barcode)
 
-        client.makePostRequest(RequestCode.PICK_PRODUCTS.code, "update-product", params)
+        if((mTotalQty + pickedQty) >= mOrderQty) {
+            client.makePostRequest(RequestCode.COMPLETE_PRODUCT.code, "update-product", params)
+            scanWithQtyDialog?.dismiss()
+            this.dismiss()
+            mListener!!.onPickerDialogFragmentClose()
+        } else {
+            client.makePostRequest(RequestCode.PICK_PRODUCTS.code, "update-product", params)
+        }
+    }
+
+    private fun requestCompletedProduct() {
+        mAdminComments = mDialogView.edtNotas.text.toString()
+
+        if (mTotalQty < mOrderQty)
+            showNoDisponibleDialog(mTotalQty)
+        else {
+            val params = hashMapOf("order_number" to mOrderNumber, "sku" to mSku, "not_available_reason" to "", "final_pick_qty" to mTotalQty.toString(),
+                    "comments" to mAdminComments, "original_aisle" to mAisle, "new_aisle" to newUpdatedAisle)
+
+            client.makePostRequest(RequestCode.COMPLETE_PRODUCT.code, "complete-product", params)
+            this.dismiss()
+            mListener!!.onPickerDialogFragmentClose()
+        }
     }
 
     private fun showNoDisponibleDialog(pickedQty: Int) {
@@ -197,13 +237,9 @@ class PickerDialogFragment : BaseDialogFragment(), ApiResponseListener {
             builder.setTitle(R.string.razon_no_disponible)
                     .setItems(R.array.not_available_reasons) { dialog, which ->
                         val notAvailableReason = arr[which]
-                        var notAvailable = 0
                         val params = hashMapOf("order_number" to mOrderNumber, "sku" to mSku, "not_available_reason" to notAvailableReason,
-                                "pick_qty" to pickedQty.toString(), "comments" to mAdminComments, "original_aisle" to mAisle, "new_aisle" to newUpdatedAisle)
-                        client.makePostRequest(RequestCode.NOT_AVAILABLE.code, "update-product", params)
-                        if (pickedQty <= 0) {
-                            notAvailable = 1
-                        }
+                                "final_pick_qty" to pickedQty.toString(), "comments" to mAdminComments, "original_aisle" to mAisle, "new_aisle" to newUpdatedAisle)
+                        client.makePostRequest(RequestCode.COMPLETE_PRODUCT.code, "complete-product", params)
                         dialog.dismiss()
                         this.dismiss()
                         mListener!!.onPickerDialogFragmentClose()
@@ -217,7 +253,8 @@ class PickerDialogFragment : BaseDialogFragment(), ApiResponseListener {
         dialogOpen = "removerDialog"
         activity?.let {
             val builder = AlertDialog.Builder(it)
-            builder.setMessage("Escanee los artículos que desea remover")
+            builder.setTitle("Escanee los artículos que desea remover")
+                    .setMessage("Escanee los UPC previamente añadidos de este producto para removerlos. Cuando termine de escanear los productos que desea remover presione el botón de \"Cerrar\".")
                     .setNegativeButton(R.string.cerrar) { dialog, _ ->
                         dialogOpen = ""
                         dialog.cancel()
@@ -247,7 +284,7 @@ class PickerDialogFragment : BaseDialogFragment(), ApiResponseListener {
         val pickedProducts = jsonContent.getJSONArray("items")
         mTotalQty = jsonContent.getInt("total_qty")
 
-        pickedItems.clear()
+        val newItems = ArrayList<Producto>()
         for (idx in 0 until pickedProducts.length()) {
             val productoObj = pickedProducts.getJSONObject(idx)
 
@@ -256,10 +293,14 @@ class PickerDialogFragment : BaseDialogFragment(), ApiResponseListener {
             producto.pickQty = productoObj.getInt("picker_qty")
             producto.pickerUser = productoObj.getString("picker_user")
             producto.dateTimePicked = productoObj.getString("picker_time")
-            pickedItems.add(producto)
+            newItems.add(producto)
         }
 
         activity!!.runOnUiThread {
+            pickedItems.clear()
+            mDialogView.recyclerPickedUpc.adapter!!.notifyDataSetChanged()
+            pickedItems.addAll(newItems)
+//            mDialogView.recyclerPickedUpc.recycledViewPool.clear()
             mDialogView.recyclerPickedUpc.adapter!!.notifyDataSetChanged()
             updateData()
         }
@@ -333,6 +374,7 @@ class PickerDialogFragment : BaseDialogFragment(), ApiResponseListener {
 
             builder.setView(mView)
                     .setTitle("Escanee para añadir.")
+                    .setMessage("Escriba la cantidad de artículos que desea añadir del UPC a esta orden. Luego escanee el producto para añadirlo. Para remover puede colocar cantidad en negativo (-). La ventana se cerrará automáticamente al escanear.")
                     .setNegativeButton(R.string.cancel) { dialog, _ ->
                         hideKeyboard(mView.edtQtyToScan)
                         dialog.cancel()

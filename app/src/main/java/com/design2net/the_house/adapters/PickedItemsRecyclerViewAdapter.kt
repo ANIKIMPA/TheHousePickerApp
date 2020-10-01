@@ -21,7 +21,10 @@ class PickedItemsRecyclerViewAdapter(private val mValues: ArrayList<Producto>)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.setData(position)
+        if(position == RecyclerView.NO_POSITION || position >= mValues.size)
+            return
+        else
+            viewHolder.setData(position)
     }
 
     override fun getItemCount(): Int = mValues.size

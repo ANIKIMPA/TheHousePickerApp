@@ -12,14 +12,14 @@ public class BarcodeConverter {
         String result = barcode;
         result = removeCheckDigit(result);
 
-        if(isShort())
+        if(isShort(result))
             result = convertToLongUPC(result);
 
         return result;
     }
 
-    public boolean isShort() {
-        return barcode.length() < UPC_LENGTH;
+    public boolean isShort(String upc) {
+        return upc.length() < UPC_LENGTH;
     }
 
     private String convertToShortUPC(String upc) {

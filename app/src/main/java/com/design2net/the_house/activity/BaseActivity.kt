@@ -24,6 +24,7 @@ import com.design2net.the_house.network.ConnectivityReceiver
 import com.design2net.the_house.MyApplication
 import com.design2net.the_house.network.OkHttpRequest
 import com.design2net.the_house.network.RequestCode
+import java.lang.IllegalArgumentException
 
 
 @SuppressLint("Registered")
@@ -34,9 +35,14 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (ConnectivityReceiver.connectivityReceiverListener == null)
-            registerReceiver(ConnectivityReceiver(),
-                    IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        try {
+            if (ConnectivityReceiver.connectivityReceiverListener == null)
+                registerReceiver(ConnectivityReceiver(),
+                        IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        } catch (e: IllegalArgumentException) {
+            Log.e("NIOVAN", e.toString())
+        }
+
 
         OkHttpRequest.internetListener = this
     }
@@ -106,6 +112,7 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
         activity.finish()
     }
 
+    @SuppressLint("ShowToast")
     protected fun errorToast(context: Context, text: String, duration: Int): Toast {
         val toast = Toast.makeText(context, text, duration)
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)

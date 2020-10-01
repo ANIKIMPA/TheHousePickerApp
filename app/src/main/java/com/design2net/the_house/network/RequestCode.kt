@@ -19,7 +19,7 @@ enum class RequestCode (val code: Int){
     CREATE_BIN(80),
     LOGIN(85),
     LOGOUT(90),
-    UPDATE_PRODUCT(95),
+    COMPLETE_PRODUCT(95),
     NOT_AVAILABLE(100),
     GET_AISLES(105),
     RESET_PRODUCT(110),
@@ -29,5 +29,6 @@ enum class RequestCode (val code: Int){
     GET_SUSTITUTOS(130),
     SEND_MESSAGE(135),
     GET_NOTIFICATIONS(140),
-    PICK_PRODUCTS(145)
+    PICK_PRODUCTS(145),
+    CHECK_APP(150)
 }
