@@ -200,7 +200,7 @@ class SustitutoDialogFragment : BaseDialogFragment(), ApiResponseListener, Susti
                 val description = sustitutoObj.getString("description")
                 val imageUrl = sustitutoObj.getString("image_url")
 
-                mProductosSustitutos.add(Producto(sku, upcStr, upc, description, imageUrl))
+                mProductosSustitutos.add(Producto(sku, upcStr, upc as ArrayList<String>, description, imageUrl))
             }
 
             initLayoutComponents()

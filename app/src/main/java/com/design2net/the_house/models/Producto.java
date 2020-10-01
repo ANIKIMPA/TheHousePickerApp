@@ -7,6 +7,7 @@ import android.widget.NumberPicker;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.List;
 import java.util.Objects;
 
 public class Producto implements NumberPicker.OnValueChangeListener, Parcelable {
@@ -138,7 +139,7 @@ public class Producto implements NumberPicker.OnValueChangeListener, Parcelable 
     }
 
     public boolean isNoDisponible() {
-        return this.notAvailable == 1;
+        return this.isPicked() && this.notAvailable == 1;
     }
 
     @Override

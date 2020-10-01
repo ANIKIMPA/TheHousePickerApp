@@ -108,4 +108,6 @@
     <string name="item_image">Item Image</string>
     <string name="zero_of_zero">0/0</string>
     <string name="scan_with_qty">Scan with qty</string>
+    <string name="the_house_to_you">The House To You</string>
+    <string name="chat">Chat</string>
 </resources>

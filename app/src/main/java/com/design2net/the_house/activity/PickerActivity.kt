@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.support.annotation.RequiresApi
 import android.support.design.widget.TabLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Html
@@ -47,21 +48,18 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
 
     private var pendientesQty = 0
     private var listosQty = 0
-    private var enEsperaQty = 0
     private var noDisponiblesQty = 0
 
     private var inPendintes = true
-        get() = field && !inListo && !inEspera && !inNoDisponible
+        get() = field && !inListo && !inNoDisponible
 
     private var inListo = false
-        get() = field && !inPendintes && !inEspera && !inNoDisponible
-
-    private var inEspera = false
-        get() = field && !inPendintes && !inListo && !inNoDisponible
+        get() = field && !inPendintes && !inNoDisponible
 
     private var inNoDisponible = false
-        get() = field && !inPendintes && !inListo && !inEspera
+        get() = field && !inPendintes && !inListo
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.app_bar_picker)
@@ -86,11 +84,7 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
         progressPicker.visibility = View.VISIBLE
         requestProductos()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            txtViewUserFullName.text = Html.fromHtml(getString(R.string.confirmacion_orden, "<b>${MyApplication.getAuth().fullName}</b>"), Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            txtViewUserFullName.text = Html.fromHtml(getString(R.string.confirmacion_orden, "<b>${MyApplication.getAuth().fullName}</b>"))
-        }
+        txtViewUserFullName.text = Html.fromHtml(getString(R.string.confirmacion_orden, "<b>${MyApplication.getAuth().fullName}</b>"), Html.FROM_HTML_MODE_LEGACY)
 
         refreshLayout.setOnRefreshListener {
             Handler().postDelayed({
@@ -182,14 +176,6 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
                             }
                     }
                     2 -> {
-                        en(espera = true)
-                        for (mProduct in mProductosAll)
-                            if (mProduct.isEnEspera) {
-                                mProductosStatus.add(mProduct)
-                                mProductos.add(mProduct)
-                            }
-                    }
-                    3 -> {
                         en(noDisponible = true)
                         for (mProduct in mProductosAll)
                             if (mProduct.isNoDisponible) {
@@ -205,10 +191,9 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
         })
     }
 
-    private fun en(pendintes: Boolean = false, listo: Boolean = false, espera: Boolean = false, noDisponible: Boolean = false) {
+    private fun en(pendintes: Boolean = false, listo: Boolean = false, noDisponible: Boolean = false) {
         this.inPendintes = pendintes
         this.inListo = listo
-        this.inEspera = espera
         this.inNoDisponible = noDisponible
     }
 
@@ -255,7 +240,7 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
     private fun filtrarPorPasillo(position: Int) {
         pasilloPos = position
         spinnerPasillos.setSelection(pasilloPos)
-        requestMessageNotifications()
+//        requestMessageNotifications()
 
         when (pasilloPos) {
             0 -> {
@@ -355,30 +340,24 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
                         upcs.add(mUpcs.getString(idx))
                     }
                     val upcStr = upcs.joinToString(",")
-
-                    mProductosAll.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
+                    val mProducto = Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute)
+                    mProductosAll.add(mProducto)
 
                     when {
                         inPendintes -> {
-                            if (pickerUser.isEmpty()) {
+                            if (mProducto.isPendiente) {
                                 mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                                 mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                             }
                         }
                         inListo -> {
-                            if (pickerUser.isNotEmpty() && notAvailable == 0) {
-                                mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
-                                mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
-                            }
-                        }
-                        inEspera -> {
-                            if (waitingSubstitute == 1) {
+                            if (mProducto.isListo) {
                                 mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                                 mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                             }
                         }
                         inNoDisponible -> {
-                            if (pickerUser.isNotEmpty() && notAvailable == 1) {
+                            if (mProducto.isNoDisponible) {
                                 mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                                 mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
                             }
@@ -482,9 +461,13 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
     }
 
     override fun onBarcodeScanned(data: String) {
+        if (inListo || inNoDisponible) {
+            return
+        }
+
         val converter = BarcodeConverter(data)
         if(pickerDialogFragment.dialog != null && pickerDialogFragment.dialog.isShowing) {
-            if (converter.barcode() in pickerDialogFragment.mUpcs)
+            if (converter.barcode() in pickerDialogFragment.mProducto.upcs)
                 pickerDialogFragment.onBarcodeScanned(converter.barcode())
             else {
                 pickerDialogFragment.dismiss()
@@ -505,19 +488,15 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
     private fun countProductsInStatus() {
         pendientesQty = 0
         listosQty = 0
-        enEsperaQty = 0
         noDisponiblesQty = 0
 
         for (producto in mProductosAll) {
             when {
                 producto.isPendiente -> pendientesQty++
                 producto.isListo -> listosQty++
-                producto.isEnEspera -> enEsperaQty++
                 producto.isNoDisponible -> noDisponiblesQty++
             }
         }
-
-        noDisponiblesQty += enEsperaQty
 
         setQtyOnTabs()
     }
@@ -525,8 +504,7 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
     private fun setQtyOnTabs() {
         tabs.getTabAt(0)!!.text = "Pend. ($pendientesQty)"
         tabs.getTabAt(1)!!.text = "Listo ($listosQty)"
-        tabs.getTabAt(2)!!.text = "Espera ($enEsperaQty)"
-        tabs.getTabAt(3)!!.text = "No Disp. ($noDisponiblesQty)"
+        tabs.getTabAt(2)!!.text = "No Disp. ($noDisponiblesQty)"
     }
 
     override fun onProductoClick(position: Int) {
@@ -538,12 +516,16 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
         if (mStatus >= 2.5) {
             Toast.makeText(this, "Esta orden ya está completada.", Toast.LENGTH_SHORT).show()
             return
+        } else if (!mProductos[position].isPendiente && mProductos[position].pickerUser != MyApplication.getAuth().username) {
+            Toast.makeText(this, "Product picked by ${mProductos[position].pickerUser}", Toast.LENGTH_SHORT).show()
+            return
         }
 
         val bundle = Bundle()
         bundle.putString("orderNumber", mOrderNumber)
         bundle.putString("sku", mProductos[position].sku)
-        bundle.putStringArray("upcs", mProductos[position].upcs.toTypedArray())
+        bundle.putStringArrayList("upcs", mProductos[position].upcs as ArrayList<String>)
+        bundle.putString("upcStr", mProductos[position].upcStr)
         bundle.putString("productImage", mProductos[position].imageUrl)
         bundle.putString("description", mProductos[position].description)
         bundle.putString("adminComments", mProductos[position].adminComments)
@@ -554,8 +536,11 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
         bundle.putInt("pick", mProductos[position].pickQty)
         bundle.putString("comments", mProductos[position].comments)
         bundle.putString("substitute", mProductos[position].substitute)
+        bundle.putInt("waitingSubstitute", mProductos[position].waitingSubstitute)
         bundle.putInt("position", position)
         bundle.putString("scannedUpc", barcode)
+        bundle.putInt("notAvailable", mProductos[position].notAvailable)
+        bundle.putString("notAvailableReason", mProductos[position].notAvailableReason)
 
         pickerDialogFragment.arguments = bundle
         pickerDialogFragment.show(supportFragmentManager, "PickerDialogFragment")
@@ -579,68 +564,11 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
     }
 
     override fun onProductReseted(response: JSONObject) {
-        runOnUiThread {
-            val productoReseted = fetchProduct(response)
-
-            updateProduct(productoReseted, mProductosAll)
-            deleteProduct(productoReseted, mProductosStatus)
-            val position = deleteProduct(productoReseted, mProductos)
-
-            recyclerViewPick.adapter!!.notifyItemRemoved(position)
-            recyclerViewPick.adapter!!.notifyItemRangeChanged(position, mProductos.size)
-            countProductsInStatus()
-            updateData()
-        }
+        requestProductos()
     }
 
     override fun onSustitutosSent(response: JSONObject) {
-        runOnUiThread {
-            val producto = fetchProduct(response)
-
-            this.updateProduct(producto, mProductosAll)
-
-            if (inPendintes) {
-                this.deleteProduct(producto, mProductosStatus)
-                val position = this.deleteProduct(producto, mProductos)
-                recyclerViewPick.adapter!!.notifyItemRemoved(position)
-                recyclerViewPick.adapter!!.notifyItemRangeChanged(position, mProductos.size)
-            } else {
-                this.updateProduct(producto, mProductosStatus)
-                val position = this.updateProduct(producto, mProductos)
-                recyclerViewPick.adapter!!.notifyItemChanged(position)
-            }
-
-            countProductsInStatus()
-            updateData()
-        }
-    }
-
-    private fun fetchProduct(response: JSONObject): Producto {
-        val productoObj = response.getJSONObject("producto")
-
-        val sku = productoObj.getString("sku")
-        val upcStr = productoObj.getString("upcs")
-        val upc = upcStr.split(",")
-        val description = productoObj.getString("description")
-        val aisle = productoObj.getString("aisle_name")
-        val pickQty = productoObj.getInt("picker_qty")
-        val checkQty = productoObj.getInt("total_check_qty")
-        val imageUrl = productoObj.getString("image_url")
-        val orderQty = productoObj.getInt("qty")
-        val pickerUser = productoObj.getString("picker_user")
-        val adminComments = productoObj.getString("admin_comments")
-        val notAvailable = productoObj.getInt("not_available")
-        val notAvailableReason = productoObj.getString("not_available_reason")
-        val newAisle = productoObj.getString("new_aisle")
-        val comments = productoObj.getString("comments")
-        val substitute = productoObj.getString("substitute")
-        val waitingSubstitute = productoObj.getInt("waiting_substitute")
-
-        return Producto(
-                sku, upcStr, upc, description, aisle, pickQty, imageUrl, checkQty, orderQty,
-                pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments,
-                substitute, waitingSubstitute
-        )
+        requestProductos()
     }
 
     //    Method for products lists

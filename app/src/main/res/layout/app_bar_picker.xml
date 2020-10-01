@@ -35,12 +35,6 @@
                 android:text="@string/listo" />
 
             <android.support.design.widget.TabItem
-                android:id="@+id/tabEspera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/espera"/>
-
-            <android.support.design.widget.TabItem
                 android:id="@+id/tabNoDisp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -250,7 +250,7 @@ class CheckerActivity : BarcodeScannerActivity(), ProductosRecyclerViewAdapter.O
                     val imageUrl = productoObj.getString("image_url")
                     val orderQty = productoObj.getInt("qty")
 
-                    mProductos.add(Producto(sku, upcStr, upc, description, pickQty, imageUrl, checkQty, orderQty))
+                    mProductos.add(Producto(sku, upcStr, upc as ArrayList<String>, description, pickQty, imageUrl, checkQty, orderQty))
                     mAllProducts.add(Producto(sku, upcStr, upc, description, pickQty, imageUrl, checkQty, orderQty))
                 }
 

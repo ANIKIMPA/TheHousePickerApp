@@ -37,6 +37,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.design2net.the_house.BuildConfig;
 import com.design2net.the_house.MyApplication;
 import com.design2net.the_house.R;
 import com.design2net.the_house.adapters.OrdenesRecyclerViewAdapter;
@@ -134,8 +135,8 @@ public class OrdenesActivity extends
 
         initRecyclerView();
 
-        txtViewUsuario.setText("User: " + MyApplication.Companion.getAuth().getFullName() + " (" + MyApplication.Companion.getAuth().getUsername() + ")");
-        txtViewVersion.setText("V: " + getVersionCode());
+        txtViewUsuario.setText("User: " + MyApplication.Companion.getAuth().getUsername());
+        txtViewVersion.setText("V: " + BuildConfig.VERSION_NAME);
         txtViewLocation.setText(tienda.toUpperCase() + "\n" + getTarea());
         txtViewLocation.setTextColor(getResources().getColor(R.color.gris_claro));
 
@@ -499,15 +500,15 @@ public class OrdenesActivity extends
 
     @Override
     public void onOrdenClick(int position) {
-//        if (!mOrdenes.get(position).user.isEmpty() && ! mOrdenes.get(position).user.equals(MyApplication.Companion.getAuth().getUsername())) {
-//            Toast toast = Toast.makeText(getApplicationContext(), Html.fromHtml("El usuario <b>"+ mOrdenes.get(position).user + "</b> está trabajando esta orden"), Toast.LENGTH_SHORT);
-////            LinearLayout toastContentView = (LinearLayout) toast.getView();
-////            toastContentView.setPadding(converTodp(8), converTodp(8), converTodp(8), converTodp(8));
-////            TextView textView = ((TextView)((LinearLayout)toast.getView()).getChildAt(0));
-////            textView.setTextColor(Color.BLACK);
-//            toast.show();
-//            return;
-//        }
+        if (!mOrdenes.get(position).user.isEmpty() && ! mOrdenes.get(position).user.equals(MyApplication.Companion.getAuth().getUsername())) {
+            Toast toast = Toast.makeText(getApplicationContext(), Html.fromHtml("El usuario <b>"+ mOrdenes.get(position).user + "</b> está trabajando esta orden"), Toast.LENGTH_SHORT);
+//            LinearLayout toastContentView = (LinearLayout) toast.getView();
+//            toastContentView.setPadding(converTodp(8), converTodp(8), converTodp(8), converTodp(8));
+//            TextView textView = ((TextView)((LinearLayout)toast.getView()).getChildAt(0));
+//            textView.setTextColor(Color.BLACK);
+            toast.show();
+            return;
+        }
 
         String text = "Ver sustitutos";
         SpannableString ss = new SpannableString(text);

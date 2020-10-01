@@ -133,7 +133,7 @@ class BagDialogFragment : BaseDialogFragment(), BagDetailsAdapter.OnProductListe
             val pickerQty = productoObj.getInt("picker_qty")
             val imageUrl = productoObj.getString("image")
             val checkQty = productoObj.getInt("check_qty")
-            mProductos.add(Producto(sku, upcStr, upc, description, pickerQty, imageUrl, checkQty, qty))
+            mProductos.add(Producto(sku, upcStr, upc as ArrayList<String>, description, pickerQty, imageUrl, checkQty, qty))
 
             val totalQty = productoObj.getInt("total_qty")
             mTotalProducts = totalQty

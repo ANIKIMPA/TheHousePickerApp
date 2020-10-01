@@ -28,6 +28,7 @@ class LoginActivity : AppCompatActivity(), ApiResponseListener {
 
         btnLogin.setOnClickListener { authenticateUser() }
 
+        loading.visibility = View.VISIBLE
         checkForUpdateApk()
     }
 
@@ -61,7 +62,6 @@ class LoginActivity : AppCompatActivity(), ApiResponseListener {
         runOnUiThread {
             val contenidoObj = response.getJSONObject("content")
             val serverVersion = contenidoObj.getInt("version_code")
-            val versionName = contenidoObj.getString("version_name")
             if (serverVersion > BuildConfig.VERSION_CODE) {
                 UpdateApp(this).execute()
                 return@runOnUiThread
@@ -69,6 +69,12 @@ class LoginActivity : AppCompatActivity(), ApiResponseListener {
 
             if (MyApplication.isUserLoggedIn())
                 goToMainActivity()
+            else {
+                edtUsername.visibility = View.VISIBLE
+                edtPassword.visibility = View.VISIBLE
+                btnLogin.visibility = View.VISIBLE
+                loading.visibility = View.GONE
+            }
         }
     }
 
