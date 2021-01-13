@@ -17,6 +17,7 @@ public class Orden {
     public double status;
     public String bagType;
     public String tarea;
+    public int netAvailableFlag;
 
     public Orden(int id, String orderNumber, int cantidadProductos, int productsCompleted, int not_available_products, double porcientoCompletado, String user, String nombreCliente, String horaDesde, String horaHasta, String tipo_entrega, double status, String bagType, String tarea) {
         this.id = id;

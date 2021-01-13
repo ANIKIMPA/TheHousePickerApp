@@ -16,6 +16,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/imgViewNetAvailableFlag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:paddingEnd="2dp"
+        android:src="@drawable/ic_warning_24"
+        app:layout_constraintEnd_toStartOf="@+id/txtViewUser"
+        app:layout_constraintStart_toEndOf="@+id/txtOrderNumber"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
     <TextView
         android:id="@+id/txtViewCliente"
         android:layout_width="wrap_content"

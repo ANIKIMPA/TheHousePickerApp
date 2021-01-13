@@ -301,10 +301,10 @@ public class OrdenesActivity extends
 
     private void restoreAllCheckBoxes() {
         chkBoxPendiente.setChecked(true);
-        chkBoxRecogido.setChecked(false);
-        chkBoxDelivery.setChecked(false);
+        chkBoxRecogido.setChecked(true);
+        chkBoxDelivery.setChecked(true);
         chkBoxVerificado.setChecked(false);
-        for (CheckBox mCheckBox : mCheckBoxes) mCheckBox.setChecked(false);
+        for (CheckBox mCheckBox : mCheckBoxes) mCheckBox.setChecked(true);
     }
 
     private void filtrarOrdenes() {
@@ -413,14 +413,17 @@ public class OrdenesActivity extends
                     double status = ordenesObj.getDouble("status");
                     String bagType = ordenesObj.getString("bag_type");
                     String tarea = ordenesObj.getString("tarea");
+                    int netAvailableFlag = ordenesObj.getInt("net_available_flag");
 
                     updateStatusCompletado(tarea);
+                    Orden orden = new Orden(id, orderNumber, productos, productsCompleted, not_available_products, porcientoCompletado, user, cliente, hora_desde, hora_hasta, deliveryType, status, bagType, tarea);
+                    orden.netAvailableFlag = netAvailableFlag;
 
-                    mOrdenesCompletas.add(new Orden(id, orderNumber, productos, productsCompleted, not_available_products, porcientoCompletado, user, cliente, hora_desde, hora_hasta, deliveryType, status, bagType, tarea));
+                    mOrdenesCompletas.add(orden);
 
                     if (status < statusCompletado) {
-                        mOrdenes.add(new Orden(id, orderNumber, productos, productsCompleted, not_available_products, porcientoCompletado, user, cliente, hora_desde, hora_hasta, deliveryType, status, bagType, tarea));
-                        mOrdenesFiltradas.add(new Orden(id, orderNumber, productos, productsCompleted, not_available_products, porcientoCompletado, user, cliente, hora_desde, hora_hasta, deliveryType, status, bagType, tarea));
+                        mOrdenes.add(orden);
+                        mOrdenesFiltradas.add(orden);
                     }
                 }
 
@@ -454,6 +457,7 @@ public class OrdenesActivity extends
                 // Si no hay resultados se muestra un mensaje indicandolo.
                 areResults();
                 crearCheckBoxDinamicos();
+                restoreAllCheckBoxes();
 
                 progress.setVisibility(View.GONE);
             }
@@ -469,8 +473,6 @@ public class OrdenesActivity extends
 
     private void requestOrdenes() {
         edtBuscarOrden.setText("");
-        restoreAllCheckBoxes();
-
         progress.setVisibility(View.VISIBLE);
 
         mOrdenesCompletas.clear();

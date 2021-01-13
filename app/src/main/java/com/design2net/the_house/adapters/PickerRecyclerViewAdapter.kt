@@ -44,6 +44,14 @@ class PickerRecyclerViewAdapter(private val mValues: ArrayList<Producto>, privat
             mView.txtViewPick.text = "Pick: ${item.pickQty}"
             mView.txtViewPasillo.text = Html.fromHtml("<b>Aisle:</b> ${item.aisle}")
 
+            if (item.netAvailableFlag == 1) {
+                mView.imgViewNetAvailableFlag2.visibility = View.VISIBLE
+                mView.txtViewNetAvailableFlag.visibility = View.VISIBLE
+            } else {
+                mView.imgViewNetAvailableFlag2.visibility = View.GONE
+                mView.txtViewNetAvailableFlag.visibility = View.GONE
+            }
+
             Picasso.get()
                     .load(item.imageUrl)
                     .into(mView.imgViewProducto)

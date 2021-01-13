@@ -334,6 +334,7 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
                     val comments = productoObj.getString("comments")
                     val substitute = productoObj.getString("substitute")
                     val waitingSubstitute = productoObj.getInt("waiting_substitute")
+                    val netAvailableFlag = productoObj.getInt("net_available_flag")
                     val mUpcs = productoObj.getJSONArray("upcs")
                     val upcs = ArrayList<String>()
                     for (idx in 0 until mUpcs.length()) {
@@ -341,25 +342,26 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
                     }
                     val upcStr = upcs.joinToString(",")
                     val mProducto = Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute)
+                    mProducto.netAvailableFlag = netAvailableFlag
                     mProductosAll.add(mProducto)
 
                     when {
                         inPendintes -> {
                             if (mProducto.isPendiente) {
-                                mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
-                                mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
+                                mProductosStatus.add(mProducto)
+                                mProductos.add(mProducto)
                             }
                         }
                         inListo -> {
                             if (mProducto.isListo) {
-                                mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
-                                mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
+                                mProductosStatus.add(mProducto)
+                                mProductos.add(mProducto)
                             }
                         }
                         inNoDisponible -> {
                             if (mProducto.isNoDisponible) {
-                                mProductosStatus.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
-                                mProductos.add(Producto(sku, upcStr, upcs, description, aisle, pickQty, imageUrl, checkQty, orderQty, pickerUser, adminComments, notAvailable, notAvailableReason, newAisle, comments, substitute, waitingSubstitute))
+                                mProductosStatus.add(mProducto)
+                                mProductos.add(mProducto)
                             }
                         }
                     }
@@ -538,9 +540,9 @@ class PickerActivity : BarcodeScannerActivity(), PickerRecyclerViewAdapter.Picke
         bundle.putString("substitute", mProductos[position].substitute)
         bundle.putInt("waitingSubstitute", mProductos[position].waitingSubstitute)
         bundle.putInt("position", position)
-        bundle.putString("scannedUpc", barcode)
         bundle.putInt("notAvailable", mProductos[position].notAvailable)
         bundle.putString("notAvailableReason", mProductos[position].notAvailableReason)
+        bundle.putString("scannedUpc", barcode)
 
         pickerDialogFragment.arguments = bundle
         pickerDialogFragment.show(supportFragmentManager, "PickerDialogFragment")

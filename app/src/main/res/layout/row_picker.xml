@@ -127,6 +127,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier3" />
 
+    <ImageView
+        android:id="@+id/imgViewNetAvailableFlag2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_warning_24"
+        android:textColor="@color/txt_app"
+        app:layout_constraintTop_toBottomOf="@+id/barrier3"
+        app:layout_constraintStart_toEndOf="@+id/guideline7"
+        app:layout_constraintBottom_toTopOf="@+id/viewBottom"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/txtViewNetAvailableFlag"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/el_cliente_acept_esperar_24_horas_por_este_producto"
+        android:textColor="@color/txt_app"
+        app:layout_constraintBottom_toTopOf="@id/viewBottom"
+        app:layout_constraintStart_toEndOf="@+id/imgViewNetAvailableFlag2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier3"
+        android:visibility="gone"/>
+
     <View
         android:id="@+id/viewBottom"
         style="@style/line_separator"

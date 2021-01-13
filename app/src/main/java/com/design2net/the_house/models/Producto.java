@@ -29,6 +29,7 @@ public class Producto implements NumberPicker.OnValueChangeListener, Parcelable 
     private String substitute;
     private int waitingSubstitute;
     private String dateTimePicked;
+    private int netAvailableFlag;
 
     public Producto(String sku) {
         this.sku = sku;
@@ -268,6 +269,14 @@ public class Producto implements NumberPicker.OnValueChangeListener, Parcelable 
 
     public void setDateTimePicked(String dateTimePicked) {
         this.dateTimePicked = dateTimePicked;
+    }
+
+    public int getNetAvailableFlag() {
+        return netAvailableFlag;
+    }
+
+    public void setNetAvailableFlag(int netAvailableFlag) {
+        this.netAvailableFlag = netAvailableFlag;
     }
 
     public static final Creator<Producto> CREATOR = new Creator<Producto>() {

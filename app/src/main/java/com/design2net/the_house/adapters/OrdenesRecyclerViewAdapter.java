@@ -7,6 +7,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.design2net.the_house.R;
@@ -57,6 +58,7 @@ public class OrdenesRecyclerViewAdapter extends RecyclerView.Adapter<OrdenesRecy
             else
                 viewHolder.txtTipo.setText("Entrega");
 
+            viewHolder.imgViewNetAvailableFlag.setVisibility(mOrdenes.get(position).netAvailableFlag == 1 ? View.VISIBLE : View.GONE);
             viewHolder.setData(position);
         }
     }
@@ -75,6 +77,7 @@ public class OrdenesRecyclerViewAdapter extends RecyclerView.Adapter<OrdenesRecy
         private TextView txtUser;
         private TextView txtTipo;
         private TextView txtViewNoDisponible;
+        private ImageView imgViewNetAvailableFlag;
         OnOrdenListener onOrdenListener;
 
         ViewHolder(@NonNull View itemView, OnOrdenListener onOrdenListener) {
@@ -88,6 +91,7 @@ public class OrdenesRecyclerViewAdapter extends RecyclerView.Adapter<OrdenesRecy
             this.txtUser = itemView.findViewById(R.id.txtViewUser);
             this.txtTipo = itemView.findViewById(R.id.txtViewTipo);
             this.txtViewNoDisponible = itemView.findViewById(R.id.txtViewNoDisponible);
+            this.imgViewNetAvailableFlag = itemView.findViewById(R.id.imgViewNetAvailableFlag);
             this.onOrdenListener = onOrdenListener;
         }
 
