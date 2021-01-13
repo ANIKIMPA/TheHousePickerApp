@@ -8,8 +8,8 @@ android {
         applicationId "d2n.supermax.the_house"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 2
-        versionName "2020-10-01"
+        versionCode 3
+        versionName "2021-01-13"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
